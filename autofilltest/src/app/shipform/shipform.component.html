@@ -1,4 +1,3 @@
-<!-- Add New/Edit Shipping Information for selected devices scenario -->
 <div class="row" >
     <div class="col-12">
       <div class="row">
@@ -14,9 +13,6 @@
     </div>
   </div>
 
-
-
-<!-- Edit Shipping form template for mobile view -->
 <ng-template #abc>
     <form id="form-shipping" [formGroup]="shippingForm" (ngSubmit)="onContinue()" autocomplete="on">
       <div class="row">
@@ -71,7 +67,6 @@
             </mat-select>
             <mat-error *ngIf="hasError('State', 'required')">State is required</mat-error>
           </mat-form-field>
-          <!-- Hidden input field to capture autofill -->
           <input type="text" id="hiddenStateInput" [value]="shippingForm.controls['State'].value == undefined ? '' :  shippingForm.controls['State'].value" class="hidden-state-input" (input)="onSateInputChange($event)" autocomplete="shipping address-level1">
         </div>
         <div class="row mx-0 primary-checkbox p-b-20">
