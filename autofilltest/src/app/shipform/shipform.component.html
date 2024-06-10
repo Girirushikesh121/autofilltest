@@ -1,0 +1,86 @@
+<!-- Add New/Edit Shipping Information for selected devices scenario -->
+<div class="row" >
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12" >
+          <div *ngTemplateOutlet="abc"></div>
+        </div>
+      </div>
+      <div class="row p-0">
+        <div class="col-12 text-center w-100 p-0">
+          <label for="btnSubmit" tabindex="0" class="btn w-100 lblSubmit">Save New Address</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- Edit Shipping form template for mobile view -->
+<ng-template #abc>
+    <form id="form-shipping" [formGroup]="shippingForm" (ngSubmit)="onContinue()" autocomplete="on">
+      <div class="row">
+        <div class="col-12 px-0 p-b-20">
+          <span class="page-heading7">Shipping Address Information</span>
+        </div>
+        <div class="col-12 px-0">
+          <span class="form-field-label2">First Name*</span>
+          <mat-form-field class="full-width" appearance="outline">
+            <input matInput formControlName="FirstName" id="ctrlFirstName" placeholder="First Name" autocomplete="shipping given-name" maxlength="{{firstNameMaxLength}}" required (keypress)="onKeyDown($event, 'FirstName')" oninput="(value=value.replace(/^[\s\uFEFF\xA0]+/g, ''))">
+          </mat-form-field>
+        </div>
+        <div class="col-12 px-0">
+          <span class="form-field-label2">Last Name*</span>
+          <mat-form-field class="full-width" appearance="outline">
+            <input matInput formControlName="LastName" id="ctrlLastName" placeholder="Last Name" autocomplete="shipping family-name" maxlength="{{lastNameMaxLength}}" required (keypress)="onKeyDown($event, 'LastName')" oninput="(value=value.replace(/^[\s\uFEFF\xA0]+/g, ''))">
+          </mat-form-field>
+        </div>
+        <div class="col-12 px-0">
+          <span class="form-field-label2">Shipping Address 1*</span>
+          <mat-form-field class="full-width" appearance="outline">
+            <input matInput formControlName="Street1" id="ctrlStreet1" placeholder="123 Street Name" autocomplete="shipping address-line1" maxlength="35" required (keypress)="onKeyDown($event, 'Street1')" oninput="(value=value.replace(/^[\s\uFEFF\xA0]+/g, ''))">
+         
+          </mat-form-field>
+        </div>
+        <div class="col-12 px-0">
+          <span class="form-field-label2">Shipping Address 2</span>
+          <mat-form-field class="full-width" appearance="outline">
+            <input matInput formControlName="Street2" id="ctlStreet2" placeholder="Apt #" autocomplete="shipping address-line2" maxlength="35" oninput="(value=value.replace(/^[\s\uFEFF\xA0]+/g, ''))">
+          </mat-form-field>
+        </div>
+        <div class="col-12 px-0">
+          <span class="form-field-label2">City*</span>
+          <mat-form-field class="full-width" appearance="outline">
+            <input matInput formControlName="City" id="ctrlCity" placeholder="City Name" autocomplete="shipping address-level2" maxlength="35" required (keypress)="onKeyDown($event, 'City')" oninput="(value=value.replace(/^[\s\uFEFF\xA0]+/g, ''))">
+          </mat-form-field>
+        </div>
+        <div class="col-12 px-0 zipcode-mobile">
+          <span class="form-field-label2">Zip Code*</span>
+          <mat-form-field class="full-width" appearance="outline">
+            <input matInput formControlName="PostalCode" id="ctrlPostalCode" placeholder="XXXXX" maxlength="5" autocomplete="shipping postal-code" required (keypress)="onKeyDown($event, 'PostalCode')" oninput="(value=value.replace(/^[\s\uFEFF\xA0]+/g, ''))" [value]="shippingForm.get('PostalCode')?.value | slice:0:5">
+          </mat-form-field>
+        </div>
+        <div class="col-12 px-0 state-dropdown">
+          <span class="form-field-label2">
+            State* <input class="hide-autofillstate" type="text" id="autoFillState" [formControl]="autoFillState">
+          </span>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-select formControlName="State" class="state-dropdown-mobile" id="ctrlState" placeholder="Select State" required (selectionChange)="changeState($event, 'State')">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let state of states" [value]="state.abbreviation">{{state.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('State', 'required')">State is required</mat-error>
+          </mat-form-field>
+          <!-- Hidden input field to capture autofill -->
+          <input type="text" id="hiddenStateInput" [value]="shippingForm.controls['State'].value == undefined ? '' :  shippingForm.controls['State'].value" class="hidden-state-input" (input)="onSateInputChange($event)" autocomplete="shipping address-level1">
+        </div>
+        <div class="row mx-0 primary-checkbox p-b-20">
+          <div class="col-12 px-0">
+            <mat-checkbox formControlName="isPrimary">Mark as primary address</mat-checkbox>
+          </div>
+        </div>
+        <button id="btnSubmit" class=" w-100" type="submit" hidden>Continue</button>
+      </div>
+    </form>
+  </ng-template>
+
